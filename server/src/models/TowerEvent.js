@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 
 
-export const EventSchema = new Schema(
+export const TowerEventSchema = new Schema(
   {
     creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' },
     name: { type: String, minLength: 2, maxLength: 50, required: true },
