@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    image: your-dockerhub-username/checkpoint7-tower:latest
+    restart: unless-stopped
+    env_file:
+      - checkpoint7-tower-env
+    ports:
+      - "3000:3000"
