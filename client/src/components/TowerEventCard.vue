@@ -9,12 +9,15 @@ defineProps({
 
 
 <template>
+  
   <div class="card bg-transparent border border-0">
-    <img :src="towerEvent.coverImg" class="card-img-top cover-img" :alt="towerEvent.name + towerEvent.startDate">
+    <router-link :to="{name: 'Event Details', params: {towerEventId: towerEvent.id} }">
+      <img :src="towerEvent.coverImg" class="card-img-top cover-img" :alt="towerEvent.name + towerEvent.startDate">
+    </router-link>
     <b class="fs-3">{{ towerEvent.name }}</b>
-    <p>{{ towerEvent.creator.name }}</p>
+    <p class="text-success">{{ towerEvent.creator.name }}</p>
     <p>{{ towerEvent.startDate }} - {{ towerEvent.location }}</p>
-    <p>{{ towerEvent.isCanceled }}</p>
+    <p class="text-primary">{{ towerEvent.isCanceled }}</p>
   </div>
 </template>
 

@@ -11,7 +11,7 @@ export class TowerEvent {
     this.location = data.location
     this.name = data.name
     this.type = data.type
-    this.startDate = new Date (data.startDate)
+    this.startDate = new Date(data.startDate)
     this.updatedAt = new Date(data.updatedAt)
   }
 }
