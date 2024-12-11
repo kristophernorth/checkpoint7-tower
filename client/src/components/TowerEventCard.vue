@@ -11,7 +11,7 @@ defineProps({
 <template>
   
   <div class="card bg-transparent border border-0">
-    <router-link :to="{name: 'Event Details', params: {towerEventId: towerEvent.id} }">
+    <router-link :to="{name: 'Tower Event Details', params: {towerEventId: towerEvent.id} }">
       <img :src="towerEvent.coverImg" class="card-img-top cover-img" :alt="towerEvent.name + towerEvent.startDate">
     </router-link>
     <b class="fs-3">{{ towerEvent.name }}</b>

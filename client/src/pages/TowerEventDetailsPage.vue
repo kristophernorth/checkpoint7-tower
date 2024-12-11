@@ -7,6 +7,7 @@ import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const towerEvent = computed(() => AppState.activeTowerEvent)
+
 const route = useRoute()
 
 onMounted(() => {
@@ -29,6 +30,7 @@ async function getTowerEventById() {
   <div class="container">
     <div class="row">
       <div class="col-md-12">
+        <h1>Tower Event Details</h1>
         {{ towerEvent }}
       </div>
     </div>

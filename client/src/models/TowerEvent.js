@@ -1,6 +1,6 @@
 export class TowerEvent {
   constructor(data) {
-    this.id = data._id
+    this.id = data.id //TODO Should it be .id or _id?
     this.capacity = data.capacity
     this.coverImg = data.coverImg
     this.createdAt = data.createdAt
