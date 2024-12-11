@@ -23,7 +23,39 @@ async function getTowerEvents() {
 </script>
 
 <template>
-  <h1>Tower Events</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Event management for people, by people</h1>
+        <p>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Tower. Events are happening every day—log in to join the fun.</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>How tower works</h2>
+    <div class="row d-flex justify-content-between">
+      <div role="button" class="col-md-5 border">
+        <h4>Discover events you're interested in</h4>
+        <p>Browse through community hosted events for all the things you love</p>
+      </div>
+      <div role="button" class="col-md-5 border">
+        <h4>Start an event to invite your friends</h4>
+        <p>Create your own Tower event, and draw from a community of millions</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Explore top categories</h2>
+    <div class="row">
+      <div class="row d-flex justify-content-between text-center">
+        <div role="button" class="col-md-2 border">All</div>
+        <div role="button" class="col-md-2 border">Concerts</div>
+        <div role="button" class="col-md-2 border">Conventions</div>
+        <div role="button" class="col-md-2 border">Sports</div>
+        <div role="button" class="col-md-2 border">Digital</div>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <section class="row">
       <div class="col-md-12">
