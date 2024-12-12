@@ -8,7 +8,7 @@ class TowerEventsService {
     return towerEvent
   }
   async getAllTowerEvents() {
-    const towerEvents = await dbContext.TowerEvents.find().populate('creator', 'name event')
+    const towerEvents = await dbContext.TowerEvents.find().populate('creator', 'name event').sort('startDate')
     return towerEvents
   }
 
