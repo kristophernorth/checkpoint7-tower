@@ -69,7 +69,7 @@ async function getTowerEvents() {
       <div class="row d-flex justify-content-between text-center">
         <div v-for="eventType in eventTypes" :key="'filter-' + eventType.name" role="button" class="col-md-2 border p-4 m-2 rounded">
           <div @click="activeFilterType = eventType.name" class="text-capitalize fw-bold">
-            {{ eventType.name }}
+            {{ eventType.name }} {{ eventType.emoji }}
           </div>
         </div>
         <!-- <div role="button" class="col-md-2 border">All</div>

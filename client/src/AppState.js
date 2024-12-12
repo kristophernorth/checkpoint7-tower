@@ -11,4 +11,3 @@ export const AppState = reactive({
   /** @type {import('./models/TowerEvent.js').TowerEvent} */
   activeTowerEvent: null
 })
-
