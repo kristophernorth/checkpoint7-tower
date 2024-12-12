@@ -58,7 +58,7 @@ async function createTowerEvent() {
             <label class="form-label" for="type">Event type</label>
             <select v-model="editableTowerEventData.type" class="form-select text-capitalize" id="type" required>
               <option selected value="" disabled>Choose an event type</option>
-              <option v-for="eventType in eventTypes" :key="eventType" :value="eventType" class="text-capitalize">
+              <option v-for="eventType in eventTypes" :key="'option-' + eventType" :value="eventType" class="text-capitalize">
                 {{ eventType }}
               </option>
             </select>

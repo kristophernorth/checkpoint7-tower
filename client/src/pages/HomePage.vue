@@ -5,9 +5,27 @@ import TowerEventCard from '@/components/TowerEventCard.vue';
 import { towerEventsService } from '@/services/TowerEventsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const towerEvents = computed(()=>AppState.towerEvents)
+const towerEvents = computed(() => { 
+  if(activeFilterType.value == 'all') return AppState.towerEvents
+  return AppState.towerEvents.filter(towerEvent => towerEvent.type == activeFilterType.value) 
+})
+
+const activeFilterType = ref('all')
+
+const eventTypes = [
+{name: 'all', emoji: '∞'},
+{name: 'concert', emoji: '🎸'},
+{name: 'sport', emoji: '⚽️'},
+{name: 'convention', emoji: '🏪'},
+{name: 'digital', emoji: '💻'}
+
+// 'concert', 
+//   'sport', 
+//   'convention', 
+//   'digital'
+]
 
 onMounted(() => {
   getTowerEvents()
@@ -49,11 +67,16 @@ async function getTowerEvents() {
     <h2>Explore top categories</h2>
     <div class="row">
       <div class="row d-flex justify-content-between text-center">
-        <div role="button" class="col-md-2 border">All</div>
+        <div v-for="eventType in eventTypes" :key="'filter-' + eventType.name" role="button" class="col-md-2 border p-4 m-2 rounded">
+          <div @click="activeFilterType = eventType.name" class="text-capitalize fw-bold">
+            {{ eventType.name }}
+          </div>
+        </div>
+        <!-- <div role="button" class="col-md-2 border">All</div>
         <div role="button" class="col-md-2 border">Concerts</div>
         <div role="button" class="col-md-2 border">Conventions</div>
         <div role="button" class="col-md-2 border">Sports</div>
-        <div role="button" class="col-md-2 border">Digital</div>
+        <div role="button" class="col-md-2 border">Digital</div> -->
       </div>
     </div>
   </div>
