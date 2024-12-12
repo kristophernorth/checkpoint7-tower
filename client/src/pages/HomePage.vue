@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState';
+import CreateEventModal from '@/components/CreateEventModal.vue';
 import TowerEventCard from '@/components/TowerEventCard.vue';
 import { towerEventsService } from '@/services/TowerEventsService';
 import { logger } from '@/utils/Logger';
@@ -38,7 +39,7 @@ async function getTowerEvents() {
         <h4>Discover events you're interested in</h4>
         <p>Browse through community hosted events for all the things you love</p>
       </div>
-      <div role="button" class="col-md-5 border">
+      <div role="button" class="col-md-5 border" data-bs-toggle="modal" data-bs-target="#towerEventModal">
         <h4>Start an event to invite your friends</h4>
         <p>Create your own Tower event, and draw from a community of millions</p>
       </div>
@@ -66,6 +67,7 @@ async function getTowerEvents() {
       </div>
     </section>
   </div>
+  <CreateEventModal/>
 </template>
 
 <style scoped lang="scss">
