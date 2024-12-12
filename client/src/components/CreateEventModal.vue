@@ -16,9 +16,6 @@ import CreateEventForm from './CreateEventForm.vue';
         <div class="modal-body">
           <CreateEventForm/>
         </div>
-        <div class="modal-footer border-0">
-          <button type="button" class="btn btn-primary">Create Event</button>
-        </div>
       </div>
     </div>
   </div>
