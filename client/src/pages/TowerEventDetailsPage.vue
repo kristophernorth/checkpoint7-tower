@@ -23,7 +23,20 @@ async function getTowerEventById() {
     Pop.error(error);
     logger.error('Getting tower event by ID', error)
   }
+}
+
+async function cancelTowerEvent() {
+  try {
+    const yes = await Pop.confirm(`Are you sure you want to cancel the ${towerEvent.value.name} event?`, "This event is going to be a dud", "Yes I'm sure")
+    if (!yes) return
+    const towerEventId = route.params.towerEventId
+    await towerEventsService.cancelTowerEvent(towerEventId)
+  } catch (error) {
+    Pop.error(error)
+    logger.log('[Error canceling event]', error)
   }
+}
+  
 </script>
 
 
@@ -37,7 +50,9 @@ async function getTowerEventById() {
     <div class="row">
       <div class="col-md-7">
         <div>
-          <h1>{{ towerEvent.name }}</h1><span>{{ towerEvent.type }}</span>
+          <h1>{{ towerEvent.name }}</h1><span class="border">{{ towerEvent.type }}</span>
+          <button class="bg-warning rounded-pill px-3 ms-2">Edit</button>
+          <button @click="cancelTowerEvent()" class="bg-danger rounded-pill px-3 ms-2">Cancel Event</button>
           <p>{{ towerEvent.description }}</p>
           <b>Date and Time</b>
           <p>{{ towerEvent.startDate }}</p>
@@ -60,6 +75,12 @@ async function getTowerEventById() {
           <button>Attend</button>
         </div>
         <p>2 spots left</p>
+        <div>
+          <i v-if="towerEvent.isCanceled" class="mdi mdi-alert text-warning" :title="`${towerEvent.name} is canceled`">Event Canceled</i>
+          <!-- //TODO calculate sold-out here using event capacity and ticket count -->
+          <!-- <i v-if="towerEvent.capacity" -->
+           <i class="border fw-bold text-success" v-else>Plenty of tickets remaining</i>
+        </div>
         <div>
           <h3>Attendees</h3>
           <div class="border">

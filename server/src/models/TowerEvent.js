@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { TicketSchema } from "./Ticket";
 
 
 export const TowerEventSchema = new Schema(
@@ -24,10 +25,11 @@ TowerEventSchema.virtual('creator', {
   ref: 'Account',
   foreignField: '_id',
   justOne: true
+})
 
-  // TicketSchema.virtual('ticketCount', {
-  //   localField: '',
-  //   ref: '',
-  //   foreignField: '',
-  //   justOne:   
+TicketSchema.virtual('ticketCount', {
+  localField: '_id',
+  ref: 'Ticket',
+  foreignField: 'eventId',
+  justOne: true
 })
