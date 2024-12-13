@@ -18,8 +18,9 @@ class TicketsService {
     return myTickets
   }
 
-  async getTicketsByEvent(eventId) {
-    const tickets = await
+  async getTicketsByTowerEvent(towerEventId) {
+    const tickets = await dbContext.Tickets.find({ towerEventId: towerEventId }).populate('event', 'name')
+    return tickets
   }
 }
 
