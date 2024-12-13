@@ -6,15 +6,16 @@ class TowerEventsService {
   async createTowerEvent(towerEventData) {
     const towerEvent = await dbContext.TowerEvents.create(towerEventData)
     await towerEvent.populate('creator', 'name event')
+    await towerEvent.populate('ticketCount')
     return towerEvent
   }
   async getAllTowerEvents() {
-    const towerEvents = await dbContext.TowerEvents.find().populate('creator').sort('startDate')
+    const towerEvents = await dbContext.TowerEvents.find().populate('creator').populate('ticketCount').sort('startDate')
     return towerEvents
   }
 
   async getTowerEventById(towerEventId) {
-    const towerEvent = (await dbContext.TowerEvents.findById(towerEventId)).populate('creator', 'name event')
+    const towerEvent = (await (await dbContext.TowerEvents.findById(towerEventId)).populate('creator', 'name event')).populate('ticketCount')
     if (towerEvent == null) {
       throw new Error(`Invalid event id: ${towerEventId}`)
     }
