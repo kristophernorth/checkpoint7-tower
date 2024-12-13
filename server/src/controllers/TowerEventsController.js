@@ -9,7 +9,7 @@ export class TowerEventsController extends BaseController {
     this.router
       .get('', this.getAllTowerEvents)
       .get('/:towerEventId', this.getTowerEventById)
-      .get('/events/:towerEventId/tickets', this.getTicketsByEvent)
+      .get('/events/:towerEventId/tickets', this.getTicketsByTowerEvent)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createTowerEvent)
       .put('/:towerEventId', this.updateTowerEvent)
@@ -68,7 +68,7 @@ export class TowerEventsController extends BaseController {
     }
   }
 
-  async getTicketsByEvent(request, response, next) {
+  async getTicketsByTowerEvent(request, response, next) {
     try {
       const towerEventId = request.params.towerEventId
       const tickets = await ticketsService.getTicketsByTowerEvent(towerEventId)
