@@ -19,8 +19,8 @@ TicketSchema.virtual('profile', {
 })
 
 TicketSchema.virtual('event', {
-  localField: 'eventId',
-  ref: 'Tower Event',
+  localField: 'towerEventId',
+  ref: 'TowerEvent',
   foreignField: '_id',
   justOne: true
 })
