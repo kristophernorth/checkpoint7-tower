@@ -9,7 +9,7 @@ export class TowerEventsController extends BaseController {
     this.router
       .get('', this.getAllTowerEvents)
       .get('/:towerEventId', this.getTowerEventById)
-      .get('/events/:towerEventId/tickets', this.getTicketsByTowerEvent)
+      .get('/:towerEventId/tickets', this.getTicketsByTowerEvent)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createTowerEvent)
       .put('/:towerEventId', this.updateTowerEvent)
