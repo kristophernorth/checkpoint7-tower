@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState';
+import { ticketsService } from '@/services/TicketsService';
 import { towerEventsService } from '@/services/TowerEventsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
@@ -7,6 +8,8 @@ import { computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const towerEvent = computed(() => AppState.activeTowerEvent)
+const account = computed(() => AppState.account)
+const ticketHolders = computed(() => AppState.ticketHolders)
 
 const route = useRoute()
 
@@ -36,7 +39,16 @@ async function cancelTowerEvent() {
     logger.log('[Error canceling event]', error)
   }
 }
-  
+
+  async function createTicket() {
+    try {
+      const towerEventData = {eventId: route.params.towerEventId}
+      await ticketsService.createTicket(towerEventData)
+    } catch (error) {
+      Pop.error(error)
+      logger.error('[Error creating ticket]', error)
+    }
+  }
 </script>
 
 
@@ -72,19 +84,22 @@ async function cancelTowerEvent() {
         <div class="border">
           <p>Interested in attending?</p>
           <p>Grab a ticket!</p>
-          <button>Attend</button>
+          <button @click="createTicket()" class="btn btn-info">Attend</button>
         </div>
         <p>2 spots left</p>
         <div>
           <i v-if="towerEvent.isCanceled" class="mdi mdi-alert text-warning" :title="`${towerEvent.name} is canceled`">Event Canceled</i>
           <!-- //TODO calculate sold-out here using event capacity and ticket count -->
           <!-- <i v-if="towerEvent.capacity" -->
-           <i class="border fw-bold text-success" v-else>Plenty of tickets remaining</i>
+          <i class="border fw-bold text-success" v-else>Plenty of tickets remaining</i>
         </div>
         <div>
           <h3>Attendees</h3>
-          <div class="border">
-            <p>Attendee name</p>
+          <div v-for="ticketHolder in ticketHolders" :key="ticketHolder.id" class="border">
+            <div>
+              <img :src="ticketHolder" :alt="ticketHolder" class="img-fluid rounded">
+              <span></span>
+            </div>
             <p>Attendee name</p>
             <p>Attendee name</p>
             <p>Attendee name</p>
