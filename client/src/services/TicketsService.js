@@ -9,7 +9,7 @@ class TicketsService{
     const response = await api.post('api/tickets', towerEventData)
     logger.log('Created ticket', response.data)
     const ticket = new Ticket(response.data)
-    AppState.ticketHolders.push(ticket)
+    AppState.purchasedEvents.push(ticket)
   }
 }
 
