@@ -64,8 +64,10 @@ async function cancelTowerEvent() {
       <div class="col-md-7">
         <div>
           <h1>{{ towerEvent.name }}</h1><span class="border">{{ towerEvent.type }}</span>
-          <button class="bg-warning rounded-pill px-3 ms-2">Edit</button>
-          <button @click="cancelTowerEvent()" class="bg-danger rounded-pill px-3 ms-2">Cancel Event</button>
+          <div v-if="towerEvent.creatorId == account?.id">
+            <button class="bg-warning rounded-pill px-3 ms-2">Edit</button>
+            <button @click="cancelTowerEvent()" class="bg-danger rounded-pill px-3 ms-2">{{towerEvent.isCanceled ? 'Un-cancel event' : 'Cancel event'}}</button>
+          </div>
           <p>{{ towerEvent.description }}</p>
           <b>Date and Time</b>
           <p>{{ towerEvent.startDate }}</p>

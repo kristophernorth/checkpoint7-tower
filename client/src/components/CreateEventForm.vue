@@ -7,7 +7,6 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
   const eventTypes = ['concert', 'sport', 'convention', 'digital']
-  const router = useRouter()
   
   const editableTowerEventData = ref({
     name: '',
@@ -19,9 +18,14 @@ import { useRouter } from 'vue-router';
     description: ''
   })
 
+  const router = useRouter()
+
 async function createTowerEvent() {
   try {
-    await towerEventsService.createTowerEvent(editableTowerEventData.value)
+    if (editableTowerEventData.value.description == '') {
+      delete editableTowerEventData.value.description
+    }
+    const towerEvent = await towerEventsService.createTowerEvent(editableTowerEventData.value)
     editableTowerEventData.value = {
       name: '',
       location: '',
@@ -32,7 +36,7 @@ async function createTowerEvent() {
       description: ''
     }
     Modal.getInstance('#towerEventModal').hide()
-    router.push({name: 'Tower Event Details', params: {towerEventId: towerEvent.id }})
+    router.push({ name: 'Tower Event Details', params: { towerEventId: towerEvent.id } })
   } catch (error) {
     Pop.error(error)
     logger.error('[Creating event failed]', error)
