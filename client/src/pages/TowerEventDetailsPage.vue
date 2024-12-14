@@ -9,13 +9,14 @@ import { useRoute } from 'vue-router';
 
 const towerEvent = computed(() => AppState.activeTowerEvent)
 const account = computed(() => AppState.account)
-const attendeeProfiles = computed(() => AppState.attendeeProfiles)
-const isAttending = computed(() => attendeeProfiles.value.some(attendeeProfile => attendeeProfile.accountId == account.value?.id))
+const ticketHolderProfiles = computed(() => AppState.ticketHolderProfiles)
+const isAttending = computed(() => ticketHolderProfiles.value.some(ticketHolderProfile => ticketHolderProfile.accountId == account.value?.id))
 
 const route = useRoute()
 
 watch(route, () => {
   getTowerEventById()
+  getTicketHoldersByEvent()
 }, {immediate: true})
 
 async function getTowerEventById() {
@@ -50,6 +51,16 @@ async function cancelTowerEvent() {
       logger.error('[Error creating ticket]', error)
     }
   }
+
+    async function getTicketHoldersByEvent() {
+      try {
+        const towerEventId = route.params.towerEventId
+        await ticketsService.getTicketHoldersByEvent(towerEventId)
+      } catch (error) {
+        Pop.error(error)
+        logger.error('[Error getting ticket holder profiles]', error)
+      }
+    }
 </script>
 
 
@@ -92,7 +103,7 @@ async function cancelTowerEvent() {
             <button v-else @click="createTicket()" class="btn btn-info">Attend</button>
           </div>
         </div>
-        <p>Spots left: {{ attendeeProfiles.length }}</p>
+        <p>Spots left: {{ ticketHolderProfiles.length }}</p>
         <div>
           <i v-if="towerEvent.isCanceled" class="mdi mdi-alert text-warning" :title="`${towerEvent.name} is canceled`">Event Canceled</i>
           <!-- //TODO calculate sold-out here using event capacity and ticket count -->
@@ -101,9 +112,9 @@ async function cancelTowerEvent() {
         </div>
         <div>
           <h3>Attendees</h3>
-          <div v-for="attendeeProfile in attendeeProfiles" :key="attendeeProfile.id" class="border">
-            <img :src="attendeeProfile.profile.picture" :alt="attendeeProfile.profile.name" class="img-fluid rounded">
-            <span>{{ attendeeProfile.profile.name }}</span>
+          <div v-for="ticketHolderProfile in ticketHolderProfiles" :key="ticketHolderProfile.id" class="border">
+            <img :src="ticketHolderProfile.profile.picture" :alt="ticketHolderProfile.profile.name" class="img-fluid rounded">
+            <span>{{ ticketHolderProfile.profile.name }}</span>
           </div>
         </div>
       </div>

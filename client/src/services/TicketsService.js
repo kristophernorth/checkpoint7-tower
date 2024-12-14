@@ -11,6 +11,13 @@ class TicketsService{
     const ticket = new Ticket(response.data)
     AppState.purchasedEvents.push(ticket)
   }
+
+  async getTicketHoldersByEvent(towerEventId) {
+    const response = await api.get(`api/events/${towerEventId}/tickets`)
+    logger.log('For ticket holders', response.data)
+    const tickets = response.data.map(ticketData => new Ticket(ticketData))
+    AppState.ticketHolderProfiles = tickets
+  }
 }
 
 export const ticketsService = new TicketsService()

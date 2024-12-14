@@ -23,6 +23,18 @@ class CommentsService {
     // }
     return comments
   }
+
+  async deleteComment(commentId, userId) {
+    const commentToDelete = await dbContext.Comments.findById(commentId)
+    if (commentToDelete == null) {
+      throw new Error(`Invalid comment id: ${commentId}`)
+    }
+    if (commentToDelete != userId) {
+      throw new Forbidden("You can't delete another person's comment")
+    }
+    await commentToDelete.deleteOne
+    return 'Comment has been deleted'
+  }
 }
 
 export const commentsService = new CommentsService()

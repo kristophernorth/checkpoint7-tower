@@ -4,7 +4,7 @@ export const CommentSchema = new Schema(
   {
     creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' },
     eventId: { type: Schema.ObjectId, required: true, ref: 'TowerEvent' },
-    body: { type: String, required: true, minLength: 1, maxLength: 1000 }
+    body: { type: String, required: true, minLength: 1, maxLength: 5000 }
   },
   {
     timestamps: true,
