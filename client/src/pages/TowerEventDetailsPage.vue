@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState';
+import { commentsService } from '@/services/CommentsService';
 import { ticketsService } from '@/services/TicketsService';
 import { towerEventsService } from '@/services/TowerEventsService';
 import { logger } from '@/utils/Logger';
@@ -11,12 +12,14 @@ const towerEvent = computed(() => AppState.activeTowerEvent)
 const account = computed(() => AppState.account)
 const ticketHolderProfiles = computed(() => AppState.ticketHolderProfiles)
 const isAttending = computed(() => ticketHolderProfiles.value.some(ticketHolderProfile => ticketHolderProfile.accountId == account.value?.id))
+const comments = computed(() => AppState.comments)
 
 const route = useRoute()
 
 watch(route, () => {
   getTowerEventById()
   getTicketHoldersByEvent()
+  getCommentsByTowerEvent()
 }, {immediate: true})
 
 async function getTowerEventById() {
@@ -58,7 +61,17 @@ async function cancelTowerEvent() {
         await ticketsService.getTicketHoldersByEvent(towerEventId)
       } catch (error) {
         Pop.error(error)
-        logger.error('[Error getting ticket holder profiles]', error)
+        logger.error('[Error getting ticket holder by event]', error)
+      }
+    }
+
+      async function getCommentsByTowerEvent() {
+      try {
+        const towerEventId = route.params.towerEventId
+        await commentsService.getCommentsByTowerEvent(towerEventId)
+      } catch (error) {
+        Pop.error(error)
+        logger.error('[Error getting comments by event]', error)
       }
     }
 </script>
@@ -89,9 +102,11 @@ async function cancelTowerEvent() {
           <h4>See what folks are saying...</h4>
           <p>Comments form input</p>
           <button>Post Comment</button>
-          <p>Comments</p>
-          <p>Comments</p>
-          <p>Comments</p>
+          <div v-for="comment in comments" :key="comment.id">
+            <img :src="comment.picture" :alt="comment.creator">
+            <span>{{ comment.creator }}</span>
+            <p>{{ comment.body }}</p>
+          </div>
         </div>
       </div>
       <div class="col-md-5 text-center">
@@ -103,7 +118,10 @@ async function cancelTowerEvent() {
             <button v-else @click="createTicket()" class="btn btn-info">Attend</button>
           </div>
         </div>
-        <p>Spots left: {{ ticketHolderProfiles.length }}</p>
+        <div>
+          <p>Spots left: {{ ticketHolderProfiles.length }}</p>
+          <p>{{towerEvent.capacity}} - {{ ticketHolderProfiles.length }}</p>
+        </div>
         <div>
           <i v-if="towerEvent.isCanceled" class="mdi mdi-alert text-warning" :title="`${towerEvent.name} is canceled`">Event Canceled</i>
           <!-- //TODO calculate sold-out here using event capacity and ticket count -->

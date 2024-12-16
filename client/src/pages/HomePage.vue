@@ -72,11 +72,6 @@ async function getTowerEvents() {
             {{ eventType.name }} {{ eventType.emoji }}
           </div>
         </div>
-        <!-- <div role="button" class="col-md-2 border">All</div>
-        <div role="button" class="col-md-2 border">Concerts</div>
-        <div role="button" class="col-md-2 border">Conventions</div>
-        <div role="button" class="col-md-2 border">Sports</div>
-        <div role="button" class="col-md-2 border">Digital</div> -->
       </div>
     </div>
   </div>
